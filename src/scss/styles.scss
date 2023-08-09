@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Target Chrome and Safari autofill */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  background-color: #fff !important;
+}
+
+/* Target Firefox autofill */
+input:-moz-placeholder {
+  background-color: #fff !important;
+}
+
+/* Target Edge autofill */
+input::placeholder {
+  background-color: #fff !important;
+  font-size: 12px;
+}
+
+@include media-breakpoint-down(sm) {
+  html {
+    font-size: 14px;
+  }
+}
