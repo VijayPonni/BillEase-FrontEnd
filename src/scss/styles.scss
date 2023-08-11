@@ -26,6 +26,13 @@ input::placeholder {
   font-size: 12px;
 }
 
+.input-group {
+  span {
+    background-color: #fff;
+    cursor: pointer;
+  }
+}
+
 @include media-breakpoint-down(sm) {
   html {
     font-size: 14px;

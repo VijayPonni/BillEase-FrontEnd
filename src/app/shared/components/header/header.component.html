@@ -1,1 +1,87 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid p-0">
+    <a class="navbar-brand text-light p-2 ms-5"
+      ><span><img src="/assets/icons/billease-logo.svg" class="logo pb-2" alt="logo" /></span
+    ></a>
+    <div class="ms-auto drop-down-mr">
+      <button
+        class="btn profile-btn text-white d-none d-sm-block"
+        role="button"
+        (click)="toggleDropDown($event)"
+        type="button"
+      >
+        <img src="/assets/icons/profile.svg" alt="profile" />
+        Tharani tharan
+        <img src="/assets/icons/arrow-down.svg" alt="arrow" />
+      </button>
+      <a (click)="toggleDropDown($event)" class="d-sm-none" type="button" role="button">
+        <span><img src="/assets/icons/navbar-toggle.svg" alt="toggle-icon" /></span>
+      </a>
+      <div
+        [classList]="showDropDown ? 'card drop-down-card drop-down-mr p-2' : 'd-none'"
+        (appClickOutside)="closeDropDown()"
+      >
+        <div class="profile-img-container">
+          <img src="/assets/images/profile-bg.png" alt="profile-cover" class="w-100" />
+          <div>
+            <img src="/assets/images/profile.png" alt="profile" class="profile-img" />
+          </div>
+        </div>
+
+        <div class="ms-auto">
+          <button class="btn logout-btn text-white mt-4">
+            <div class="d-flex justify-content-center align-items-center">
+              <img src="/assets/icons/logout.svg" alt="logout" class="mt-1" />
+              <span class="ps-1">Logout</span>
+            </div>
+          </button>
+        </div>
+        <div class="profile-details">
+          <h4 class="fw-bold mb-0">Tharani tharan</h4>
+          <small>tharani@yavar.ai</small>
+          <div class="d-flex align-items-center mt-2 mb-3">
+            <a>Change password </a>
+            <img src="/assets/icons/change-pwd.svg" class="ps-1" alt="arrow" />
+          </div>
+        </div>
+
+        <div class="change-pwd-container">
+          <hr />
+          <h5 class="fw-medium">Change Password</h5>
+          <form>
+            <label for="current-pwd" class="fw-medium mt-2">Current Password</label>
+            <div class="input-group flex-nowrap mt-1">
+              <input
+                [type]="showCurrentPassword ? 'text' : 'password'"
+                class="form-control input-password"
+                placeholder="Enter your current password"
+                id="current-pwd"
+              />
+              <span class="input-group-text" id="addon-wrapping" (click)="toggleCurrentPassword()"
+                ><img src="/assets/icons/eye.svg" alt="eye"
+              /></span>
+            </div>
+            <label for="new-pwd" class="fw-medium mt-3">New Password</label>
+            <div class="input-group flex-nowrap mt-1">
+              <input
+                [type]="showNewPassword ? 'text' : 'password'"
+                class="form-control input-password"
+                placeholder="Enter your new password"
+                id="new-pwd"
+              />
+              <span class="input-group-text" id="addon-wrapping" (click)="toggleNewPassword()"
+                ><img src="/assets/icons/eye.svg" alt="eye"
+              /></span>
+            </div>
+            <div class="mt-4 d-flex justify-content-between pb-4">
+              <button class="btn profile-btn text-white px-5" type="button">
+                Confirm Password
+              </button>
+              <button class="btn btn-dark text-white px-5" type="button">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
