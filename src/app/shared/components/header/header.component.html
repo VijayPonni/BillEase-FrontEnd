@@ -18,7 +18,9 @@
         <span><img src="/assets/icons/navbar-toggle.svg" alt="toggle-icon" /></span>
       </a>
       <div
-        [classList]="showDropDown ? 'card drop-down-card drop-down-mr p-2' : 'd-none'"
+        [classList]="
+          showDropDown ? 'card drop-down-card drop-down-animation drop-down-mr p-2' : 'd-none'
+        "
         (appClickOutside)="closeDropDown()"
       >
         <div class="profile-img-container">
@@ -28,7 +30,7 @@
           </div>
         </div>
 
-        <div class="ms-auto">
+        <div class="ms-auto" [ngClass]="showChangePasswordForm ? 'hide' : ''">
           <button class="btn logout-btn text-white mt-4">
             <div class="d-flex justify-content-center align-items-center">
               <img src="/assets/icons/logout.svg" alt="logout" class="mt-1" />
@@ -39,13 +41,20 @@
         <div class="profile-details">
           <h4 class="fw-bold mb-0">Tharani tharan</h4>
           <small>tharani@yavar.ai</small>
-          <div class="d-flex align-items-center mt-2 mb-3">
-            <a>Change password </a>
+          <div
+            class="d-flex align-items-center mt-2 mb-2"
+            [ngClass]="showChangePasswordForm ? 'd-none' : ''"
+          >
+            <a (click)="toggleChangePasswordForm()">Change password </a>
             <img src="/assets/icons/change-pwd.svg" class="ps-1" alt="arrow" />
           </div>
         </div>
 
-        <div class="change-pwd-container">
+        <div
+          *ngIf="showChangePasswordForm"
+          class="change-pwd-container change-pwd-anim"
+          [@fadeInOut]
+        >
           <hr />
           <h5 class="fw-medium">Change Password</h5>
           <form>
@@ -73,11 +82,17 @@
                 ><img src="/assets/icons/eye.svg" alt="eye"
               /></span>
             </div>
-            <div class="mt-4 d-flex justify-content-between pb-4">
+            <div class="mt-4 d-flex flex-column flex-sm-row justify-content-between pb-4">
               <button class="btn profile-btn text-white px-5" type="button">
                 Confirm Password
               </button>
-              <button class="btn btn-dark text-white px-5" type="button">Cancel</button>
+              <button
+                class="btn btn-dark text-white px-5"
+                type="button"
+                (click)="toggleChangePasswordForm()"
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>

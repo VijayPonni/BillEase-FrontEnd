@@ -68,9 +68,35 @@
       .logout-btn {
         padding: 5px 14px 7px 10px;
       }
+      .btn-dark {
+        margin-top: 3%;
+      }
     }
     .drop-down-mr {
       margin-right: 5.5%;
     }
+  }
+}
+
+.drop-down-animation {
+  animation: growDown 300ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.change-pwd-anim {
+  animation: growDown 500ms ease-in-out forwards;
+  transform-origin: top center;
+}
+
+.hide {
+  clip-path: circle(0);
+}
+
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
   }
 }
