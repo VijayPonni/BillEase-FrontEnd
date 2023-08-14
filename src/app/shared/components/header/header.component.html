@@ -57,7 +57,7 @@
         >
           <hr />
           <h5 class="fw-medium">Change Password</h5>
-          <form>
+          <form [formGroup]="changePasswordForm">
             <label for="current-pwd" class="fw-medium mt-2">Current Password</label>
             <div class="input-group flex-nowrap mt-1">
               <input
@@ -65,10 +65,22 @@
                 class="form-control input-password"
                 placeholder="Enter your current password"
                 id="current-pwd"
+                formControlName="currentPassword"
               />
-              <span class="input-group-text" id="addon-wrapping" (click)="toggleCurrentPassword()"
+              <span class="input-group-text" (click)="toggleCurrentPassword()"
                 ><img src="/assets/icons/eye.svg" alt="eye"
               /></span>
+            </div>
+            <div
+              *ngIf="
+                formControls['currentPassword'].touched && formControls['currentPassword'].invalid
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="formControls['currentPassword'].errors?.['required']"
+                >Current password is required</small
+              >
             </div>
             <label for="new-pwd" class="fw-medium mt-3">New Password</label>
             <div class="input-group flex-nowrap mt-1">
@@ -77,13 +89,43 @@
                 class="form-control input-password"
                 placeholder="Enter your new password"
                 id="new-pwd"
+                formControlName="newPassword"
               />
-              <span class="input-group-text" id="addon-wrapping" (click)="toggleNewPassword()"
+              <span class="input-group-text" (click)="toggleNewPassword()"
                 ><img src="/assets/icons/eye.svg" alt="eye"
               /></span>
             </div>
+            <div *ngIf="formControls['newPassword'].touched && formControls['newPassword'].invalid">
+              <small class="text-danger" *ngIf="formControls['newPassword'].errors?.['required']"
+                >New password is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="formControls['newPassword'].errors?.['minlength']; else passwordError"
+                >New password must be 6 characters long</small
+              >
+              <ng-template #passwordError>
+                <small
+                  class="text-danger"
+                  *ngIf="formControls['newPassword'].errors?.['password']?.errorMessage"
+                  >New
+                  {{
+                    formControls['newPassword'].errors?.['password']?.errorMessage | lowercase
+                  }}</small
+                >
+              </ng-template>
+            </div>
+            <small
+              *ngIf="
+                formControls['newPassword'].valid &&
+                formControls['newPassword'].value &&
+                changePasswordForm.errors?.['changePassword']
+              "
+              class="text-danger"
+              >Current password and new password should not be the same</small
+            >
             <div class="mt-4 d-flex flex-column flex-sm-row justify-content-between pb-4">
-              <button class="btn profile-btn text-white px-5" type="button">
+              <button class="btn profile-btn text-white px-5" type="button" [disabled]="!changePasswordForm.valid">
                 Confirm Password
               </button>
               <button

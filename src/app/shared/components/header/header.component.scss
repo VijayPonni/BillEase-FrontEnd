@@ -1,6 +1,7 @@
-@import '../../../../../node_modules/bootstrap/scss/mixins';
-@import '../../../../../node_modules/bootstrap/scss/functions';
-@import '../../../../../node_modules/bootstrap/scss/variables';
+@use 'colors';
+@import '/node_modules/bootstrap/scss/mixins';
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
 
 .navbar {
   .logo {
@@ -20,7 +21,7 @@
       }
     }
     .logout-btn {
-      background-color: #7c5cfc;
+      background-color: colors.$purple;
       font-weight: 500;
       padding: 5px 22px 8px 16px;
     }
@@ -28,7 +29,7 @@
       padding-left: 5%;
       a {
         font-size: 0.75rem;
-        color: #5e43d8;
+        color: colors.$purple-1;
         font-weight: 500;
         &:hover {
           text-decoration: underline;
@@ -41,13 +42,16 @@
       label {
         font-size: 0.875rem;
       }
+      small {
+        font-size: 0.75rem;
+      }
     }
   }
   .drop-down-mr {
     margin-right: 3.8%;
   }
   .profile-btn {
-    background-color: #7c5cfc;
+    background-color: colors.$purple;
   }
 }
 
