@@ -18,9 +18,9 @@
         <span><img src="/assets/icons/navbar-toggle.svg" alt="toggle-icon" /></span>
       </a>
       <div
-        [classList]="
-          showDropDown ? 'card drop-down-card drop-down-animation drop-down-mr p-2' : 'd-none'
-        "
+        *ngIf="showDropDown"
+        [@fadeInOut]
+        class="card drop-down-card drop-down-mr p-2"
         (appClickOutside)="closeDropDown()"
       >
         <div class="profile-img-container">
@@ -50,11 +50,7 @@
           </div>
         </div>
 
-        <div
-          *ngIf="showChangePasswordForm"
-          class="change-pwd-container change-pwd-anim"
-          [@fadeInOut]
-        >
+        <div *ngIf="showChangePasswordForm" class="change-pwd-container" [@fadeInOut]>
           <hr />
           <h5 class="fw-medium">Change Password</h5>
           <form [formGroup]="changePasswordForm">

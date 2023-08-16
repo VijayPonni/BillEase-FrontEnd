@@ -15,7 +15,7 @@ import { changePasswordMismatchValidator } from '../../validators/change-passwor
         animate('300ms ease-in', style({ opacity: 1, height: '*' })),
       ]),
       transition(':leave', [
-        style({ opacity: 0, height: '*' }),
+        style({ opacity: 1, height: '*' }),
         animate('300ms ease-out', style({ opacity: 0, height: '0' })),
       ]),
     ]),
