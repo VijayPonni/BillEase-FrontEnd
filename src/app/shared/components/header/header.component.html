@@ -1,3 +1,144 @@
-<div class="">
-  <h1 appDnd>HI</h1>
-</div>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid p-0">
+    <a class="navbar-brand text-light p-2 ms-5"
+      ><span><img src="/assets/icons/billease-logo.svg" class="logo pb-2" alt="logo" /></span
+    ></a>
+    <div class="ms-auto drop-down-mr">
+      <button
+        class="btn profile-btn text-white d-none d-sm-block"
+        role="button"
+        (click)="toggleDropDown($event)"
+        type="button"
+      >
+        <img src="/assets/icons/profile.svg" alt="profile" />
+        Tharani tharan
+        <img src="/assets/icons/arrow-down.svg" alt="arrow" />
+      </button>
+      <a (click)="toggleDropDown($event)" class="d-sm-none" type="button" role="button">
+        <span><img src="/assets/icons/navbar-toggle.svg" alt="toggle-icon" /></span>
+      </a>
+      <div
+        *ngIf="showDropDown"
+        [@fadeInOut]
+        class="card drop-down-card drop-down-mr p-2"
+        (appClickOutside)="closeDropDown()"
+      >
+        <div class="profile-img-container">
+          <img src="/assets/images/profile-bg.png" alt="profile-cover" class="w-100" />
+          <div>
+            <img src="/assets/images/profile.png" alt="profile" class="profile-img" />
+          </div>
+        </div>
+
+        <div class="ms-auto" [ngClass]="showChangePasswordForm ? 'hide' : ''">
+          <button class="btn logout-btn text-white mt-4">
+            <div class="d-flex justify-content-center align-items-center">
+              <img src="/assets/icons/logout.svg" alt="logout" class="mt-1" />
+              <span class="ps-1">Logout</span>
+            </div>
+          </button>
+        </div>
+        <div class="profile-details">
+          <h4 class="fw-bold mb-0">Tharani tharan</h4>
+          <small>tharani@yavar.ai</small>
+          <div
+            class="d-flex align-items-center mt-2 mb-2"
+            [ngClass]="showChangePasswordForm ? 'd-none' : ''"
+          >
+            <a (click)="toggleChangePasswordForm()">Change password </a>
+            <img src="/assets/icons/change-pwd.svg" class="ps-1" alt="arrow" />
+          </div>
+        </div>
+
+        <div *ngIf="showChangePasswordForm" class="change-pwd-container" [@fadeInOut]>
+          <hr />
+          <h5 class="fw-medium">Change Password</h5>
+          <form [formGroup]="changePasswordForm">
+            <label for="current-pwd" class="fw-medium mt-2">Current Password</label>
+            <div class="input-group flex-nowrap mt-1">
+              <input
+                [type]="showCurrentPassword ? 'text' : 'password'"
+                class="form-control input-password"
+                placeholder="Enter your current password"
+                id="current-pwd"
+                formControlName="currentPassword"
+              />
+              <span class="input-group-text" (click)="toggleCurrentPassword()"
+                ><img src="/assets/icons/eye.svg" alt="eye"
+              /></span>
+            </div>
+            <div
+              *ngIf="
+                formControls['currentPassword'].touched && formControls['currentPassword'].invalid
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="formControls['currentPassword'].errors?.['required']"
+                >Current password is required</small
+              >
+            </div>
+            <label for="new-pwd" class="fw-medium mt-3">New Password</label>
+            <div class="input-group flex-nowrap mt-1">
+              <input
+                [type]="showNewPassword ? 'text' : 'password'"
+                class="form-control input-password"
+                placeholder="Enter your new password"
+                id="new-pwd"
+                formControlName="newPassword"
+              />
+              <span class="input-group-text" (click)="toggleNewPassword()"
+                ><img src="/assets/icons/eye.svg" alt="eye"
+              /></span>
+            </div>
+            <div *ngIf="formControls['newPassword'].touched && formControls['newPassword'].invalid">
+              <small class="text-danger" *ngIf="formControls['newPassword'].errors?.['required']"
+                >New password is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="formControls['newPassword'].errors?.['minlength']; else passwordError"
+                >New password must be 6 characters long</small
+              >
+              <ng-template #passwordError>
+                <small
+                  class="text-danger"
+                  *ngIf="formControls['newPassword'].errors?.['password']?.errorMessage"
+                  >New
+                  {{
+                    formControls['newPassword'].errors?.['password']?.errorMessage | lowercase
+                  }}</small
+                >
+              </ng-template>
+            </div>
+            <small
+              *ngIf="
+                formControls['newPassword'].valid &&
+                formControls['newPassword'].value &&
+                changePasswordForm.errors?.['changePassword']
+              "
+              class="text-danger"
+              >Current password and new password should not be the same</small
+            >
+            <div class="mt-4 d-flex flex-column flex-sm-row justify-content-between pb-4">
+              <button
+                class="btn profile-btn text-white px-5"
+                type="button"
+                [disabled]="!changePasswordForm.valid"
+              >
+                Confirm Password
+              </button>
+              <button
+                class="btn btn-dark text-white px-5"
+                type="button"
+                (click)="toggleChangePasswordForm()"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

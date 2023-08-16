@@ -1,0 +1,36 @@
+@use 'colors';
+@import '/node_modules/bootstrap/scss/mixins';
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
+
+.footer {
+  background: transparent;
+  font-size: 0.85rem;
+}
+
+.heart-symbol {
+  color: red;
+}
+
+.brand {
+  text-decoration: none;
+  font-weight: 500;
+  color: colors.$purple;
+}
+
+.links {
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .footer {
+    text-align: center;
+  }
+  .links{
+    margin-top: 10px;
+  }
+}

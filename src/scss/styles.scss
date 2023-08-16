@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../../node_modules/bootstrap/scss/mixins';
-@import '../../node_modules/bootstrap/scss/functions';
-@import '../../node_modules/bootstrap/scss/variables';
+@use 'colors';
+@import '/node_modules/bootstrap/scss/mixins';
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
 
 * {
   margin: 0;
@@ -12,18 +13,39 @@
 /* Target Chrome and Safari autofill */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
-  background-color: #fff !important;
+  background-color: colors.$white !important;
 }
 
 /* Target Firefox autofill */
 input:-moz-placeholder {
-  background-color: #fff !important;
+  background-color: colors.$white !important;
 }
 
 /* Target Edge autofill */
 input::placeholder {
-  background-color: #fff !important;
+  background-color: colors.$white !important;
   font-size: 12px;
+}
+
+.input-group {
+  span {
+    background-color: colors.$white;
+    cursor: pointer;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background-color: #d3d3d3;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #a9a9a9;
 }
 
 @include media-breakpoint-down(sm) {

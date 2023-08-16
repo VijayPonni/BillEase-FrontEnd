@@ -1,0 +1,90 @@
+@use 'colors';
+@import '/node_modules/bootstrap/scss/mixins';
+@import '/node_modules/bootstrap/scss/functions';
+@import '/node_modules/bootstrap/scss/variables';
+
+.navbar {
+  background: transparent;
+  .logo {
+    width: 40%;
+  }
+  .drop-down-card {
+    position: absolute;
+    right: 0;
+    max-height: 99.5vh;
+    overflow-y: auto;
+    margin-top: 6px;
+    .profile-img-container {
+      position: relative;
+      .profile-img {
+        position: absolute;
+        bottom: -30%;
+        left: 4%;
+        width: 20%;
+      }
+    }
+    .logout-btn {
+      background-color: colors.$purple;
+      font-weight: 500;
+      padding: 5px 22px 8px 16px;
+    }
+    .profile-details {
+      padding-left: 5%;
+      a {
+        font-size: 0.75rem;
+        color: colors.$purple-1;
+        font-weight: 500;
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+    .change-pwd-container {
+      padding: 0 5%;
+      label {
+        font-size: 0.875rem;
+      }
+      small {
+        font-size: 0.75rem;
+      }
+    }
+  }
+  .drop-down-mr {
+    margin-right: 3.8%;
+  }
+  .profile-btn {
+    background-color: colors.$purple;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .navbar {
+    .navbar-brand {
+      width: 55%;
+      margin-left: 25px !important;
+      padding-left: 0 !important;
+    }
+    .drop-down-card {
+      max-width: 90vw;
+      margin-top: 10px;
+      .profile-img {
+        width: 18%;
+        bottom: -20%;
+      }
+      .logout-btn {
+        padding: 5px 14px 7px 10px;
+      }
+      .btn-dark {
+        margin-top: 3%;
+      }
+    }
+    .drop-down-mr {
+      margin-right: 5.5%;
+    }
+  }
+}
+
+.hide {
+  clip-path: circle(0);
+}
