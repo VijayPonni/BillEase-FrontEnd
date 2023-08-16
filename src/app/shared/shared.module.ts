@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DndDirective } from './lib/dnd.directive';
 
 @NgModule({
-  declarations: [DropDownDirective, HeaderComponent, FooterComponent],
+  declarations: [DropDownDirective, HeaderComponent, FooterComponent, DndDirective],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  exports: [DropDownDirective, HeaderComponent, FooterComponent],
+  exports: [DropDownDirective, HeaderComponent, FooterComponent, DndDirective],
 })
 export class SharedModule {}

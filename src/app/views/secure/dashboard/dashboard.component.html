@@ -1,1 +1,73 @@
-<h1>I am dashboard</h1>
+<div class="home-page d-flex flex-column align-items-center justify-content-center">
+  <div>
+    <div class="d-flex flex-column align-items-center">
+      <h1 class="heading-text">Your Automated</h1>
+      <h1 class="scanner-text">Document Scanner!</h1>
+    </div>
+  </div>
+  <br />
+  <p class="paragraph">
+    Effortlessly scan and extract data from documents with precision. Boost productivity and ditch
+    manual entry! Your automated document scanner awaits.
+  </p>
+  <br />
+  <div class="dropzone-background" appDnd (fileDropped)="onFileDropped($event)">
+    <div [ngClass]="fileUploaded ? 'dropzone_after_file_upload' : 'dropzone_before_file_upload'">
+      <div class="upload-section" *ngIf="!fileUploaded">
+        <input
+          type="file"
+          #fileDropRef
+          id="fileDropRef"
+          (change)="fileBrowseHandler($event)"
+          accept=".jpg,.png"
+        />
+        <img src="assets/images/file_upload_image.png" alt="file_upload_image" /><br /><br />
+        <h3>
+          <label for="fileDropRef">Click here </label> <span> to upload or drop media here </span>
+        </h3>
+        <h6>Max file size - 20MB, Supported file type - jpg, png.</h6>
+      </div>
+      <div class="progressbar-section" *ngIf="fileUploaded && isProgress">
+        <div
+          class="d-sm-flex align-items-center align-items-sm-baseline"
+          *ngFor="let file of files"
+        >
+          <div class="col-sm-1">
+            <img src="assets/icons/blur_image_icon.svg" alt="image_icon" />
+          </div>
+          <p class="col-sm-9 text-sm-start">{{ file.name }}</p>
+          <p class="col-sm-2">{{ formatBytes(file?.size) }}</p>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" [style.width]="progress + '%'">{{ progress }}%</div>
+        </div>
+      </div>
+      <div class="file-upload-success" *ngIf="fileUploaded && isValidFile">
+        <div
+          class="d-sm-flex align-items-center align-items-sm-baseline"
+          *ngFor="let file of files"
+        >
+          <div class="col-sm-1">
+            <img src="assets/icons/image_icon.svg" alt="image_icon" />
+          </div>
+          <p class="col-sm-9 text-sm-start">{{ file.name }}</p>
+          <p class="col-sm-2 file-size-text">{{ formatBytes(file?.size) }}</p>
+        </div>
+      </div>
+      <div class="file-upload-failure" *ngIf="fileUploaded && !isValidFile && !isProgress">
+        <img src="assets/icons/danger_icon.svg" alt="" /><br /><br />
+        <h2>Oops! We encountered an error while processing your image. Please try again.</h2>
+        <p>
+          Image quality is too low or blurry. Unsupported file format. Network connection issue.
+        </p>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="d-flex">
+    <button class="btn submit-button" [disabled]="isDisabled">
+      {{ submitButtonText }}
+    </button>
+    <button class="btn cancel-button">Cancel</button>
+  </div>
+</div>
