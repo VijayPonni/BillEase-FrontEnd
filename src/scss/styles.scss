@@ -34,6 +34,20 @@ input::placeholder {
   }
 }
 
+::-webkit-scrollbar-track {
+  background-color: #d3d3d3;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #a9a9a9;
+}
+
 @include media-breakpoint-down(sm) {
   html {
     font-size: 14px;

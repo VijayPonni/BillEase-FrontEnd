@@ -10,7 +10,9 @@
   .drop-down-card {
     position: absolute;
     right: 0;
-    margin-top: 13px;
+    max-height: 99.5vh;
+    overflow-y: auto;
+    margin-top: 6px;
     .profile-img-container {
       position: relative;
       .profile-img {
@@ -64,7 +66,7 @@
     }
     .drop-down-card {
       max-width: 90vw;
-      margin-top: 18px;
+      margin-top: 10px;
       .profile-img {
         width: 18%;
         bottom: -20%;
