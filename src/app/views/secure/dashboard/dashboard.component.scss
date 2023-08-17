@@ -4,32 +4,29 @@
 
 .heading-text {
   color: white;
-  font-size: 59px;
-  font-weight: 700;
+  font-size: 49px;
 }
 .scanner-text {
   background-clip: text;
   color: transparent;
   background-image: linear-gradient(to right, #7c5cfc, #e74fbf, #ef8943);
-  font-size: 59px;
-  font-weight: 700;
+  font-size: 49px;
 }
 .paragraph {
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 18px;
   color: #90a3bf;
   text-align: center;
   max-width: 900px;
 }
 
 .dropzone-background {
-  padding: 20px;
+  padding: 15px;
   background-color: white;
   border-radius: 8px;
   width: 65%;
 
   .dropzone_before_file_upload {
-    padding: 50px 180px;
+    padding: 25px 180px;
     text-align: center;
     border: dashed 2px #9e9e9e;
     background-color: #fafafab2;
@@ -56,13 +53,11 @@
     }
     h3 {
       color: #052443;
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 20px;
     }
     h6 {
       color: #596780;
       font-size: 14px;
-      font-weight: 400;
     }
   }
 
@@ -82,68 +77,64 @@
 
   .file-upload-success {
     background-color: white;
-    padding: 10px 40px;
-    font-size: 18px;
+    padding: 7px 40px;
+    font-size: 16px;
     color: black;
     .file-size-text {
       color: #000000b2;
       font-size: 10px;
-      font-weight: 400;
     }
   }
 
   .file-upload-failure {
-    padding: 30px 50px;
+    padding: 0px 50px;
     h2 {
       color: #ff4423;
-      font-size: 24px;
-      font-weight: 700;
-    }
+      font-size: 20px;    }
     p {
       color: #596780;
-      font-size: 14px;
-      font-weight: 400;
-    }
+      font-size: 14px;    }
   }
 }
 
 .submit-button {
   background-color: #7c5cfc;
   color: white;
-  padding: 13px 24px;
+  padding: 10px 24px;
   border-radius: 10px;
   width: 180px;
   margin-right: 20px;
   border: none;
 }
+
 .cancel-button {
-  background-color: #1a202c;
+  // background-color: #1a202c;
+  background-color: #7c5cfc;
   color: white;
   width: 180px;
   border-radius: 10px;
-  padding: 13px 24px;
+  padding: 10px 24px;
   border: none;
 }
 
 @include media-breakpoint-down(xl) {
   .dropzone-background {
-    padding: 20px;
     .dropzone_before_file_upload {
-      padding: 30px 10px;
-    }
-    .dropzone_after_file_upload {
-      padding: 10px;
+      padding: 25px 0px;
     }
   }
 }
 
 @include media-breakpoint-down(lg) {
   .dropzone-background {
-    width: 100%;
+    width: 90%;
   }
 }
 
 @include media-breakpoint-down(sm) {
+  .dropzone-background {
+    width: 100%;
+  }
   .heading-text {
     font-size: 31px;
   }
