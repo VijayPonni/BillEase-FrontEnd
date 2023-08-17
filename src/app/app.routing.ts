@@ -6,6 +6,11 @@ import { DefaultLayoutComponent } from './shared/containers/default-layout/defau
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     loadChildren: () =>
       import('./views/public/authentication/authentication.module').then(
         (module) => module.AuthenticationModule
