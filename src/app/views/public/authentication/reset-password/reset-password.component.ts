@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { confirmPasswordMismatchValidator } from 'src/app/shared/validators/change-password.validator';
+import { passwordValidator } from 'src/app/shared/validators/password.validator';
 
 @Component({
   selector: 'app-reset-password',
@@ -7,19 +10,38 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['../login/login.component.scss', './reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-  showPassword: boolean = false;
+  showNewPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   resetForm!: FormGroup;
+  resetPasswordToken!: string;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.resetForm = this.formBuilder.group({
-      new_password: [null, [Validators.required]],
-      confirm_password: [null, [Validators.required]],
-    });
+    this.resetPasswordToken = this.activatedRoute.snapshot.queryParams['reset_token'];
+    this.resetForm = this.formBuilder.group(
+      {
+        new_password: [null, [Validators.required, Validators.minLength(6), passwordValidator]],
+        confirm_password: [null, [Validators.required, Validators.minLength(6)]],
+      },
+      {
+        validator: confirmPasswordMismatchValidator('new_password', 'confirm_password'),
+      }
+    );
   }
 
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
+  get formControls(): { [key: string]: AbstractControl } {
+    return this.resetForm.controls;
+  }
+
+  toggleShowNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  toggleShowConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }
