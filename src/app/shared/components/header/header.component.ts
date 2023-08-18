@@ -9,6 +9,9 @@ import { removeLoggedInUser } from 'src/app/views/public/authentication/store/au
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { selectUserDetails } from 'src/app/views/public/authentication/store/auth.selector';
+import { AppState } from 'src/app/app.reducer';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -34,12 +37,14 @@ export class HeaderComponent implements OnInit {
   showChangePasswordForm = false;
   changePasswordForm!: FormGroup;
   isLoggingOut: boolean = false;
+  userName: string = '';
+  userEmail: string = '';
   private subscriptions = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private store: Store,
+    private store: Store<AppState>,
     private router: Router,
     private toastrService: ToastrService
   ) {}
@@ -54,6 +59,13 @@ export class HeaderComponent implements OnInit {
         validators: [changePasswordMismatchValidator('currentPassword', 'newPassword')],
       }
     );
+    this.store
+      .select(selectUserDetails)
+      .pipe(take(1))
+      .subscribe((details) => {
+        this.userName = details.name;
+        this.userEmail = details.email;
+      });
   }
 
   get formControls(): { [key: string]: AbstractControl } {
@@ -96,7 +108,7 @@ export class HeaderComponent implements OnInit {
         this.toastrService.success('Logged out successfully');
         this.isLoggingOut = false;
       },
-      error: (error) => {
+      error: () => {
         this.store.dispatch(removeLoggedInUser());
         this.router.navigateByUrl('/login');
         this.toastrService.success('Logged out successfully');

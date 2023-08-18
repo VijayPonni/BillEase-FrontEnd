@@ -11,7 +11,7 @@
         type="button"
       >
         <img src="/assets/icons/profile.svg" alt="profile" />
-        Tharani tharan
+        {{ userName }}
         <img src="/assets/icons/arrow-down.svg" alt="arrow" />
       </button>
       <a (click)="toggleDropDown($event)" class="d-sm-none" type="button" role="button">
@@ -43,8 +43,8 @@
           </button>
         </div>
         <div class="profile-details">
-          <h4 class="fw-bold mb-0">Tharani tharan</h4>
-          <small>tharani@yavar.ai</small>
+          <h4 class="fw-bold mb-0">{{ userName }}</h4>
+          <small>{{ userEmail }}</small>
           <div
             class="d-flex align-items-center mt-2 mb-2"
             [ngClass]="showChangePasswordForm ? 'd-none' : ''"

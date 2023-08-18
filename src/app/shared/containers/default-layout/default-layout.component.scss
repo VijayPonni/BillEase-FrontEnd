@@ -11,10 +11,16 @@
 
 .header {
   position: fixed;
-  z-index: 1;
+  z-index: 4;
   top: 0;
   left: 0;
   width: 100%;
+}
+
+.main {
+  padding: 11.5vh 3vw;
+  position: relative;
+  z-index: 2;
 }
 
 .footer {
@@ -22,8 +28,39 @@
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 3;
 }
 
-.main {
-  padding: 11.5vh 3vw;
+.ring {
+  position: absolute;
+  border: 75px solid;
+  border-color: rgba(25, 30, 42, 1);
+  border-bottom-left-radius: 100%;
+  border-right: none;
+  border-top: none;
+  z-index: 1;
+}
+
+.top-right {
+  top: 0px;
+  right: 0px;
+  width: 350px;
+  height: 350px;
+}
+
+.bottom-left {
+  bottom: 0px;
+  left: 0px;
+  width: 350px;
+  height: 350px;
+}
+
+.ring-1 {
+  position: absolute;
+  border: 75px solid;
+  border-color: rgba(25, 30, 42, 1);
+  border-top-right-radius: 100%;
+  border-left: none;
+  border-bottom: none;
+  z-index: 0;
 }
