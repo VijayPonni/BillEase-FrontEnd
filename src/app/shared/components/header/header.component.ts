@@ -3,6 +3,12 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../../validators/password.validator';
 import { changePasswordMismatchValidator } from '../../validators/change-password.validator';
+import { AuthService } from 'src/app/views/public/authentication/auth.service';
+import { Store } from '@ngrx/store';
+import { removeLoggedInUser } from 'src/app/views/public/authentication/store/auth.actions';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -27,8 +33,16 @@ export class HeaderComponent implements OnInit {
   showNewPassword = false;
   showChangePasswordForm = false;
   changePasswordForm!: FormGroup;
+  isLoggingOut: boolean = false;
+  private subscriptions = new Subscription();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private store: Store,
+    private router: Router,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.changePasswordForm = this.formBuilder.group(
@@ -71,5 +85,24 @@ export class HeaderComponent implements OnInit {
   toggleChangePasswordForm(): void {
     this.showChangePasswordForm = !this.showChangePasswordForm;
     this.changePasswordForm.reset();
+  }
+
+  logOut(): void {
+    this.isLoggingOut = true;
+    const observer = this.authService.logOut().subscribe({
+      next: () => {
+        this.store.dispatch(removeLoggedInUser());
+        this.router.navigateByUrl('/login');
+        this.toastrService.success('Logged out successfully');
+        this.isLoggingOut = false;
+      },
+      error: (error) => {
+        this.store.dispatch(removeLoggedInUser());
+        this.router.navigateByUrl('/login');
+        this.toastrService.success('Logged out successfully');
+        this.isLoggingOut = false;
+      },
+    });
+    this.subscriptions.add(observer);
   }
 }

@@ -13,6 +13,7 @@ const routes: Routes = [
   {
     path: 'forgot_password',
     component: ForgotPasswordComponent,
+    canActivate: [CanDeActivateUser],
   },
 ];
 
