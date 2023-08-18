@@ -24,10 +24,7 @@ class UnAuthGuard {
     });
   }
 
-  CanDeActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  CanDeActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.token) {
       this.router.navigateByUrl('/dashboard');
       return false;
@@ -41,5 +38,5 @@ export const CanDeActivateUser: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-  return inject(UnAuthGuard).CanDeActivate(route, state);
+  return inject(UnAuthGuard).CanDeActivate();
 };

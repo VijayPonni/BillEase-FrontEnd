@@ -4,9 +4,10 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationRoutingModule } from './authentication.routing';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [LoginComponent, ForgotPasswordComponent],
+  declarations: [LoginComponent, ForgotPasswordComponent, ResetPasswordComponent],
   imports: [CommonModule, AuthenticationRoutingModule, SharedModule],
 })
 export class AuthenticationModule {}
