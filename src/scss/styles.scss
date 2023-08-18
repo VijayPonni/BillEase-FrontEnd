@@ -34,12 +34,12 @@ input::placeholder {
   }
 }
 
-input.ng-invalid.ng-touched{
-  border: 1px solid #DC4C64;
+input.ng-invalid.ng-touched {
+  border: 1px solid #dc4c64;
 }
 
-input:focus{
-  box-shadow:none !important;
+input:focus {
+  box-shadow: none !important;
 }
 
 ::-webkit-scrollbar-track {
