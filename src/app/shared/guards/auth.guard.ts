@@ -20,14 +20,11 @@ class AuthGuard {
     private router: Router
   ) {
     this.store.select(selectToken).subscribe((token: string) => {
-      this.token = 'token';
+      this.token = token;
     });
   }
 
-  CanActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  CanActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.token) {
       return true;
     } else {
@@ -40,5 +37,5 @@ export const CanActivateUser: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
-  return inject(AuthGuard).CanActivate(route, state);
+  return inject(AuthGuard).CanActivate();
 };
