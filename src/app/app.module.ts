@@ -13,6 +13,7 @@ import { metaReducers } from './app-meta.reducer';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, P404Component, DefaultLayoutComponent],
@@ -23,6 +24,7 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducers, { metaReducers: metaReducers }),
     HttpClientModule,
+    ToastrModule.forRoot({ timeOut: 1500 }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

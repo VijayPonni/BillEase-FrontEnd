@@ -20,7 +20,7 @@ class AuthGuard {
     private router: Router
   ) {
     this.store.select(selectToken).subscribe((token: string) => {
-      this.token = 'token';
+      this.token = token;
     });
   }
 

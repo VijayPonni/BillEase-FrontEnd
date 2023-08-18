@@ -25,17 +25,5 @@
 }
 
 .main {
-  padding: 7% 0;
-}
-
-@include media-breakpoint-down(lg) {
-  .main {
-    padding-top: 10%;
-  }
-}
-
-@include media-breakpoint-down(md) {
-  .main {
-    padding-top: 15%;
-  }
+  padding: 11.5vh 3vw;
 }

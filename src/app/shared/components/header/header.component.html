@@ -31,7 +31,11 @@
         </div>
 
         <div class="ms-auto" [ngClass]="showChangePasswordForm ? 'hide' : ''">
-          <button class="btn logout-btn text-white mt-4">
+          <button
+            class="btn logout-btn text-white mt-4"
+            (click)="logOut()"
+            [disabled]="isLoggingOut"
+          >
             <div class="d-flex justify-content-center align-items-center">
               <img src="/assets/icons/logout.svg" alt="logout" class="mt-1" />
               <span class="ps-1">Logout</span>
