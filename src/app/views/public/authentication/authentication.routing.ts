@@ -19,6 +19,7 @@ const routes: Routes = [
   {
     path: 'reset_password',
     component: ResetPasswordComponent,
+    canActivate: [CanDeActivateUser],
   },
 ];
 
