@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthenticationState, LoginResponse, UserCredentials } from './auth.model';
+import {
+  AuthenticationState,
+  ForgotPasswordrequestParams,
+  ForgotPwdResponse,
+  LoginResponse,
+  ResetPasswordRequestParams,
+  UserCredentials,
+} from './auth.model';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { setLoggedInUser } from './store/auth.actions';
 import { SuccessMessage } from 'src/app/shared/shared.model';
@@ -39,5 +46,21 @@ export class AuthService {
 
   public logOut(): Observable<SuccessMessage> {
     return this.http.delete<any>(`${this.apiUrl}/logout`);
+  }
+
+  public forgotPassword(params: ForgotPasswordrequestParams): Observable<ForgotPwdResponse> {
+    return this.http.post<ForgotPwdResponse>(`${this.apiUrl}/send_resend_password_link`, params);
+  }
+
+  public resetPassword(
+    params: ResetPasswordRequestParams,
+    token: string
+  ): Observable<SuccessMessage> {
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/reset_password`, params, {
+      headers: headers,
+    });
   }
 }

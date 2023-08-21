@@ -16,3 +16,15 @@ export interface UserCredentials {
   email: string;
   passowrd: string;
 }
+
+export interface ForgotPasswordrequestParams {
+  email: string;
+}
+
+export interface ResetPasswordRequestParams {
+  new_password: string;
+  confirm_new_password: string;
+}
+export interface ForgotPwdResponse {
+  message: string;
+}
