@@ -14,5 +14,10 @@ export interface LoginResponse {
 
 export interface UserCredentials {
   email: string;
-  passowrd: string;
+  password: string;
+}
+
+export interface ChangePasswordParams {
+  current_password: string;
+  new_password: string;
 }
