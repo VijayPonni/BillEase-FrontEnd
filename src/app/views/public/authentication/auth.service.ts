@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import {
   AuthenticationState,
   ForgotPasswordrequestParams,
-  ForgotPwdResponse,
-  LoginResponse,
   ResetPasswordRequestParams,
+  ChangePasswordParams,
+  LoginResponse,
   UserCredentials,
 } from './auth.model';
 import { environment } from 'src/environments/environment';
@@ -48,8 +48,8 @@ export class AuthService {
     return this.http.delete<any>(`${this.apiUrl}/logout`);
   }
 
-  public forgotPassword(params: ForgotPasswordrequestParams): Observable<ForgotPwdResponse> {
-    return this.http.post<ForgotPwdResponse>(`${this.apiUrl}/send_resend_password_link`, params);
+  public forgotPassword(params: ForgotPasswordrequestParams): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/send_resend_password_link`, params);
   }
 
   public resetPassword(
@@ -62,5 +62,9 @@ export class AuthService {
     return this.http.post<SuccessMessage>(`${this.apiUrl}/reset_password`, params, {
       headers: headers,
     });
+  }
+
+  public changePassword(changePasswordParams: ChangePasswordParams): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/change_password`, changePasswordParams);
   }
 }

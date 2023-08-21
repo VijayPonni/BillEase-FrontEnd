@@ -14,7 +14,12 @@ export interface LoginResponse {
 
 export interface UserCredentials {
   email: string;
-  passowrd: string;
+  password: string;
+}
+
+export interface ChangePasswordParams {
+  current_password: string;
+  new_password: string;
 }
 
 export interface ForgotPasswordrequestParams {
@@ -24,7 +29,4 @@ export interface ForgotPasswordrequestParams {
 export interface ResetPasswordRequestParams {
   new_password: string;
   confirm_new_password: string;
-}
-export interface ForgotPwdResponse {
-  message: string;
 }

@@ -9,6 +9,8 @@
     width: 40%;
   }
   .drop-down-card {
+    min-width: 446px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     position: absolute;
     right: 0;
     max-height: 99.5vh;
@@ -68,6 +70,7 @@
     .drop-down-card {
       max-width: 90vw;
       margin-top: 10px;
+      min-width: auto;
       .profile-img {
         width: 18%;
         bottom: -20%;

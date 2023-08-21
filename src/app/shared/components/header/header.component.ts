@@ -9,6 +9,10 @@ import { removeLoggedInUser } from 'src/app/views/public/authentication/store/au
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { selectUserDetails } from 'src/app/views/public/authentication/store/auth.selector';
+import { AppState } from 'src/app/app.reducer';
+import { take } from 'rxjs/operators';
+import { ChangePasswordParams } from 'src/app/views/public/authentication/auth.model';
 
 @Component({
   selector: 'app-header',
@@ -34,12 +38,15 @@ export class HeaderComponent implements OnInit {
   showChangePasswordForm = false;
   changePasswordForm!: FormGroup;
   isLoggingOut: boolean = false;
+  userName: string = '';
+  userEmail: string = '';
+  isChangePasswordLoading: boolean = false;
   private subscriptions = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private store: Store,
+    private store: Store<AppState>,
     private router: Router,
     private toastrService: ToastrService
   ) {}
@@ -54,6 +61,13 @@ export class HeaderComponent implements OnInit {
         validators: [changePasswordMismatchValidator('currentPassword', 'newPassword')],
       }
     );
+    this.store
+      .select(selectUserDetails)
+      .pipe(take(1))
+      .subscribe((details) => {
+        this.userName = details.name;
+        this.userEmail = details.email;
+      });
   }
 
   get formControls(): { [key: string]: AbstractControl } {
@@ -96,11 +110,34 @@ export class HeaderComponent implements OnInit {
         this.toastrService.success('Logged out successfully');
         this.isLoggingOut = false;
       },
-      error: (error) => {
+      error: () => {
         this.store.dispatch(removeLoggedInUser());
         this.router.navigateByUrl('/login');
         this.toastrService.success('Logged out successfully');
         this.isLoggingOut = false;
+      },
+    });
+    this.subscriptions.add(observer);
+  }
+
+  changePassword(): void {
+    this.isChangePasswordLoading = true;
+    const changePasswordParams: ChangePasswordParams = {
+      current_password: this.changePasswordForm.value.currentPassword,
+      new_password: this.changePasswordForm.value.newPassword,
+    };
+    const observer = this.authService.changePassword(changePasswordParams).subscribe({
+      next: () => {
+        this.toastrService.success(
+          'Password changed Successfully. Please login with your new credentials'
+        );
+        this.logOut();
+        this.router.navigateByUrl('/login');
+        this.isChangePasswordLoading = false;
+      },
+      error: () => {
+        this.toastrService.error('');
+        this.isChangePasswordLoading = false;
       },
     });
     this.subscriptions.add(observer);

@@ -11,7 +11,7 @@
         type="button"
       >
         <img src="/assets/icons/profile.svg" alt="profile" />
-        Tharani tharan
+        {{ userName }}
         <img src="/assets/icons/arrow-down.svg" alt="arrow" />
       </button>
       <a (click)="toggleDropDown($event)" class="d-sm-none" type="button" role="button">
@@ -43,8 +43,8 @@
           </button>
         </div>
         <div class="profile-details">
-          <h4 class="fw-bold mb-0">Tharani tharan</h4>
-          <small>tharani@yavar.ai</small>
+          <h4 class="fw-bold mb-0">{{ userName }}</h4>
+          <small>{{ userEmail }}</small>
           <div
             class="d-flex align-items-center mt-2 mb-2"
             [ngClass]="showChangePasswordForm ? 'd-none' : ''"
@@ -57,7 +57,7 @@
         <div *ngIf="showChangePasswordForm" class="change-pwd-container" [@fadeInOut]>
           <hr />
           <h5 class="fw-medium">Change Password</h5>
-          <form [formGroup]="changePasswordForm">
+          <form [formGroup]="changePasswordForm" (submit)="changePassword()">
             <label for="current-pwd" class="fw-medium mt-2">Current Password</label>
             <div class="input-group flex-nowrap mt-1">
               <input
@@ -127,8 +127,8 @@
             <div class="mt-4 d-flex flex-column flex-sm-row justify-content-between pb-4">
               <button
                 class="btn profile-btn text-white px-5"
-                type="button"
-                [disabled]="!changePasswordForm.valid"
+                type="submit"
+                [disabled]="!changePasswordForm.valid || isChangePasswordLoading"
               >
                 Confirm Password
               </button>
