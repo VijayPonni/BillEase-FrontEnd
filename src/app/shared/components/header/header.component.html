@@ -57,7 +57,7 @@
         <div *ngIf="showChangePasswordForm" class="change-pwd-container" [@fadeInOut]>
           <hr />
           <h5 class="fw-medium">Change Password</h5>
-          <form [formGroup]="changePasswordForm">
+          <form [formGroup]="changePasswordForm" (submit)="changePassword()">
             <label for="current-pwd" class="fw-medium mt-2">Current Password</label>
             <div class="input-group flex-nowrap mt-1">
               <input
@@ -128,7 +128,7 @@
               <button
                 class="btn profile-btn text-white px-5"
                 type="button"
-                [disabled]="!changePasswordForm.valid"
+                [disabled]="!changePasswordForm.valid || isChangePasswordLoading"
               >
                 Confirm Password
               </button>

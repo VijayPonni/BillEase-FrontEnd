@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthenticationState, LoginResponse, UserCredentials } from './auth.model';
+import {
+  AuthenticationState,
+  ChangePasswordParams,
+  LoginResponse,
+  UserCredentials,
+} from './auth.model';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -39,5 +44,11 @@ export class AuthService {
 
   public logOut(): Observable<SuccessMessage> {
     return this.http.delete<any>(`${this.apiUrl}/logout`);
+  }
+
+  public changePassword(changePasswordParams: ChangePasswordParams): Observable<SuccessMessage> {
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/change_password`, {
+      changePasswordParams,
+    });
   }
 }
