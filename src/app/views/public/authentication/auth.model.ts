@@ -21,3 +21,12 @@ export interface ChangePasswordParams {
   current_password: string;
   new_password: string;
 }
+
+export interface ForgotPasswordrequestParams {
+  email: string;
+}
+
+export interface ResetPasswordRequestParams {
+  new_password: string;
+  confirm_new_password: string;
+}
