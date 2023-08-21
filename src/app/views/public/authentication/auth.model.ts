@@ -14,7 +14,7 @@ export interface LoginResponse {
 
 export interface UserCredentials {
   email: string;
-  passowrd: string;
+  password: string;
 }
 
 export interface ChangePasswordParams {
