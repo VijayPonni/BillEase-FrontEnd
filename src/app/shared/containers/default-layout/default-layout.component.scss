@@ -64,3 +64,19 @@
   border-bottom: none;
   z-index: 0;
 }
+
+.ring-center {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translate(-50%);
+  background: radial-gradient(#252324, #252324);
+  box-shadow:
+    0 0 60px 30px #252324,
+    0 0 100px 60px #252324,
+    0 0 140px 90px #191e2a;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  z-index: 0;
+}
