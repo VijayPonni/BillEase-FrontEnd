@@ -52,7 +52,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: (error) => {
-          this.toastreService.error(error);
+          this.toastreService.error(error.errors);
           this.ispasswordresendLinkSend = false;
           this.isLoading = false;
         },

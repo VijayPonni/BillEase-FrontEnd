@@ -135,8 +135,8 @@ export class HeaderComponent implements OnInit {
         this.router.navigateByUrl('/login');
         this.isChangePasswordLoading = false;
       },
-      error: () => {
-        this.toastrService.error('');
+      error: (error) => {
+        this.toastrService.error(error.errors);
         this.isChangePasswordLoading = false;
       },
     });

@@ -24,7 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
         const errorResponse: ErrorReponse = {
-          errors: httpErrorResponse.error.errors,
+          errors: httpErrorResponse.error.detail,
         };
         if (httpErrorResponse.status === 401) {
           this.store.dispatch(removeLoggedInUser());
