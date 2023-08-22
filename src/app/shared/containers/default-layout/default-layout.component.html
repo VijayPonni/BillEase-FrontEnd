@@ -1,4 +1,4 @@
-<div class="default-layout">
+<!-- <div class="default-layout">
   <div class="ring top-right"></div>
   <div class="ring-1 bottom-left d-none d-lg-block"></div>
   <div class="ring-center d-none d-xl-block"></div>
@@ -7,4 +7,15 @@
     <router-outlet></router-outlet>
   </div>
   <app-footer class="footer"></app-footer>
+</div> -->
+
+<div [ngClass]="!isScannedBillPage ? 'default-layout' : 'scanned-bill-default-layout'">
+  <div *ngIf="!isScannedBillPage" class="ring top-right"></div>
+  <div *ngIf="!isScannedBillPage" class="ring-1 bottom-left d-none d-lg-block"></div>
+  <div *ngIf="!isScannedBillPage" class="ring-center d-none d-xl-block"></div>
+  <app-header [isScannedBillPage]="isScannedBillPage" class="header"></app-header>
+  <div class="container-fluid main">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer [isScannedBillPage]="isScannedBillPage" class="footer"></app-footer>
 </div>

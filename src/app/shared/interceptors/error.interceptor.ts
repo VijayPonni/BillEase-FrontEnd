@@ -24,11 +24,32 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
         const errorResponse: ErrorReponse = {
-          errors: httpErrorResponse.error.detail,
+          message: httpErrorResponse.error.detail,
+          status: httpErrorResponse.status,
         };
-        if (httpErrorResponse.status === 401) {
+        const errorMessage = errorResponse.message;
+
+        if (httpErrorResponse.status <= 0) {
+          errorResponse.message =
+            'Sorry, no Internet connectivity, Please reconnect and try again!';
+        } else if (httpErrorResponse.status == 400) {
+          errorResponse.message = 'Bad Request';
+        } else if (httpErrorResponse.status == 401) {
           this.store.dispatch(removeLoggedInUser());
           this.router.navigateByUrl('/login');
+          errorResponse.message =
+            errorMessage ||
+            'Sorry for the inconvenience, but you are not authorized to look into this page';
+        } else if (httpErrorResponse.status == 403) {
+          errorResponse.message = errorMessage || 'forbidden';
+        } else if (httpErrorResponse.status == 404) {
+          errorResponse.message = errorMessage || 'Not found';
+        } else if (httpErrorResponse.status == 422) {
+          errorResponse.message = httpErrorResponse.statusText || 'Validation Error';
+        } else if (httpErrorResponse.status == 500) {
+          errorResponse.message = errorMessage || 'Internal Sever Error';
+        } else {
+          errorResponse.message = errorMessage || 'Something went wrong. Please contact Admin';
         }
         return throwError(() => errorResponse);
       })

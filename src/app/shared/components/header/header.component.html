@@ -1,7 +1,24 @@
-<nav class="navbar navbar-expand-lg">
+<nav
+  class="navbar navbar-expand-lg"
+  [style.background]="
+    !isScannedBillPage
+      ? 'linear-gradient(to left top, #191e2a, #0d121f, #0d121f, #191e2a)'
+      : '#F3F5F7'
+  "
+  [style.border-bottom]="!isScannedBillPage ? '1px solid #FFFFFF29' : '1px solid #00000029'"
+>
   <div class="container-fluid p-0">
     <a class="navbar-brand text-light p-2 ms-5"
-      ><span><img src="/assets/icons/billease-logo.svg" class="logo pb-2" alt="logo" /></span
+      ><span>
+        <img
+          [src]="
+            !isScannedBillPage
+              ? '/assets/icons/billease-logo.svg'
+              : '/assets/icons/billease_violet_logo.svg'
+          "
+          class="logo pb-2"
+          alt="logo"
+        /> </span
     ></a>
     <div class="ms-auto drop-down-mr">
       <button
@@ -15,7 +32,16 @@
         <img src="/assets/icons/arrow-down.svg" alt="arrow" />
       </button>
       <a (click)="toggleDropDown($event)" class="d-sm-none" type="button" role="button">
-        <span><img src="/assets/icons/navbar-toggle.svg" alt="toggle-icon" /></span>
+        <span>
+          <img
+            [src]="
+              !isScannedBillPage
+                ? '/assets/icons/navbar-toggle.svg'
+                : '/assets/icons/navbar-toggle-violet.svg'
+            "
+            alt="toggle-icon"
+          />
+        </span>
       </a>
       <div
         *ngIf="showDropDown"

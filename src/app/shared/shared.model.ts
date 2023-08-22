@@ -1,5 +1,6 @@
 export interface ErrorReponse {
-  errors: string[];
+  message: string;
+  status: number;
 }
 
 export interface SuccessMessage {
