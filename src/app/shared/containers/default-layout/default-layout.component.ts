@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterEvent, Event, NavigationEnd } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, RouterEvent, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 
 @Component({

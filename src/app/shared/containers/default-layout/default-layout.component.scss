@@ -3,7 +3,6 @@
 @import '/node_modules/bootstrap/scss/variables';
 
 .default-layout {
-  background: linear-gradient(to left top, #191e2a, #0d121f, #0d121f, #191e2a);
   min-height: 100vh;
   background-size: cover;
   background-position: center;
@@ -79,11 +78,4 @@
   height: 200px;
   border-radius: 100%;
   z-index: 0;
-}
-
-.scanned-bill-default-layout {
-  background: #f3f5f7;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
 }

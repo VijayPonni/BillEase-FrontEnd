@@ -1,15 +1,11 @@
-<!-- <div class="default-layout">
-  <div class="ring top-right"></div>
-  <div class="ring-1 bottom-left d-none d-lg-block"></div>
-  <div class="ring-center d-none d-xl-block"></div>
-  <app-header class="header"></app-header>
-  <div class="container-fluid main">
-    <router-outlet></router-outlet>
-  </div>
-  <app-footer class="footer"></app-footer>
-</div> -->
-
-<div [ngClass]="!isScannedBillPage ? 'default-layout' : 'scanned-bill-default-layout'">
+<div
+  [style.background]="
+    !isScannedBillPage
+      ? 'linear-gradient(to left top, #191e2a, #0d121f, #0d121f, #191e2a)'
+      : '#f3f5f7'
+  "
+  class="default-layout"
+>
   <div *ngIf="!isScannedBillPage" class="ring top-right"></div>
   <div *ngIf="!isScannedBillPage" class="ring-1 bottom-left d-none d-lg-block"></div>
   <div *ngIf="!isScannedBillPage" class="ring-center d-none d-xl-block"></div>
