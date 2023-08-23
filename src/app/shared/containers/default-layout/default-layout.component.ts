@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterEvent, Event, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-default-layout',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnDestroy {
   isScannedBillPage: boolean = true;
+  private subscriptions = new Subscription();
 
   constructor(private route: Router) {
-    this.route.events
+    const observer = this.route.events
       .pipe(filter((e: Event | RouterEvent) => e instanceof NavigationEnd))
       .subscribe(() => {
         this.isScannedBillRoute();
       });
+    this.subscriptions.add(observer);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   isScannedBillRoute() {
