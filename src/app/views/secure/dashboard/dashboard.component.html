@@ -67,7 +67,7 @@
   </div>
   <br />
   <div class="d-flex">
-    <button class="btn submit-button" [disabled]="isDisabled">
+    <button class="btn submit-button" (click)="onScanImage()" [disabled]="isDisabled">
       {{ submitButtonText }}
     </button>
     <button class="btn cancel-button">Cancel</button>

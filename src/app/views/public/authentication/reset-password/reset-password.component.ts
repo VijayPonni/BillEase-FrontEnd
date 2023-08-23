@@ -74,7 +74,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.isLoading = false;
-          this.toastrService.error(error.errors);
+          this.toastrService.error(error.message);
         },
       });
 

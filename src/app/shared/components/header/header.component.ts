@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../../validators/password.validator';
@@ -42,6 +42,8 @@ export class HeaderComponent implements OnInit {
   userEmail: string = '';
   isChangePasswordLoading: boolean = false;
   private subscriptions = new Subscription();
+
+  @Input() isScannedBillPage!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -136,7 +138,7 @@ export class HeaderComponent implements OnInit {
         this.isChangePasswordLoading = false;
       },
       error: (error) => {
-        this.toastrService.error(error.errors);
+        this.toastrService.error(error.message);
         this.isChangePasswordLoading = false;
       },
     });

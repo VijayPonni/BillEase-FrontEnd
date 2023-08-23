@@ -1,12 +1,26 @@
-<div class="d-flex flex-column flex-md-row justify-content-md-between text-white p-2 ps-4 footer">
-  <small
+<div
+  class="d-flex flex-column flex-md-row justify-content-md-between text-white p-2 ps-4 footer"
+  [style.background]="
+    !isScannedBillPage
+      ? 'linear-gradient(to left top, #191e2a, #0d121f, #0d121f, #191e2a)'
+      : '#F3F5F7'
+  "
+  [style.border-top]="!isScannedBillPage ? '1px solid #FFFFFF29' : '1px solid #00000029'"
+>
+  <small [style.color]="!isScannedBillPage ? '#F3F5F7' : '#1A202C'"
     >@2023, Made with <span class="heart-symbol"> &#9829; </span> by
     <span><a href="https://yavar.ai" target="_blank" class="brand">Yavar tech works</a></span> for a
     better web
   </small>
   <div class="links me-3">
-    <a href="#" class="ms-3">Privacy Policy</a>
-    <a href="#" class="ms-3">Terms & Conditions</a>
-    <a href="#" class="ms-3">Help center</a>
+    <a [style.color]="!isScannedBillPage ? '#F3F5F7' : '#1A202C'" href="#" class="ms-3"
+      >Privacy Policy</a
+    >
+    <a [style.color]="!isScannedBillPage ? '#F3F5F7' : '#1A202C'" href="#" class="ms-3"
+      >Terms & Conditions</a
+    >
+    <a [style.color]="!isScannedBillPage ? '#F3F5F7' : '#1A202C'" href="#" class="ms-3"
+      >Help center</a
+    >
   </div>
 </div>
