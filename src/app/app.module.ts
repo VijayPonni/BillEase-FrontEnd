@@ -24,7 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducers, { metaReducers: metaReducers }),
     HttpClientModule,
-    ToastrModule.forRoot({ timeOut: 1500 }),
+    ToastrModule.forRoot({ timeOut: 3000 }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
