@@ -4,22 +4,23 @@ import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
   selector: '[appDnd]',
 })
 export class DndDirective {
-  @Output() fileDropped = new EventEmitter<any>();
+  @Output() fileDropped = new EventEmitter<FileList>();
 
-  @HostListener('dragover', ['$event']) onDragOver($event: Event) {
+  @HostListener('dragover', ['$event']) onDragOver($event: DragEvent) {
     $event.preventDefault();
     $event.stopPropagation();
   }
 
-  @HostListener('dragleave', ['$event']) onDragLeave($event: Event) {
+  @HostListener('dragleave', ['$event']) onDragLeave($event: DragEvent) {
     $event.preventDefault();
     $event.stopPropagation();
   }
 
-  @HostListener('drop', ['$event']) onDrop($event: any) {
+  @HostListener('drop', ['$event']) onDrop($event: DragEvent) {
     $event.preventDefault();
     $event.stopPropagation();
-    if ($event.dataTransfer.files) {
+
+    if ($event.dataTransfer?.files) {
       const files = $event.dataTransfer.files;
       this.fileDropped.emit(files);
     }

@@ -19,7 +19,7 @@
           #fileDropRef
           id="fileDropRef"
           (change)="fileBrowseHandler($event)"
-          accept=".jpg,.png"
+          accept=".jpg,.png, .jpeg"
         />
         <img src="assets/images/file_upload_image.png" alt="file_upload_image" /><br /><br />
         <h3 class="fw-bold">
@@ -36,7 +36,7 @@
             <img src="assets/icons/blur_image_icon.svg" alt="image_icon" />
           </div>
           <p class="col-sm-9 text-sm-start">{{ file.name }}</p>
-          <p class="col-sm-2">{{ formatBytes(file?.size) }}</p>
+          <p class="col-sm-2">{{ formatBytes(file.size) }}</p>
         </div>
         <div class="progress">
           <div class="progress-bar" [style.width]="progress + '%'">{{ progress }}%</div>
@@ -51,7 +51,7 @@
             <img src="assets/icons/image_icon.svg" alt="image_icon" />
           </div>
           <p class="col-sm-9 text-sm-start">{{ file.name }}</p>
-          <p class="col-sm-2 file-size-text fw-normal">{{ formatBytes(file?.size) }}</p>
+          <p class="col-sm-2 file-size-text fw-normal">{{ formatBytes(file.size) }}</p>
         </div>
       </div>
       <div class="file-upload-failure" *ngIf="fileUploaded && !isValidFile && !isProgress">
@@ -67,9 +67,17 @@
   </div>
   <br />
   <div class="d-flex">
-    <button class="btn submit-button" (click)="onScanImage()" [disabled]="isDisabled">
-      {{ submitButtonText }}
+    <button
+      *ngIf="isScanButtonVisible"
+      class="btn submit-button"
+      (click)="onScanImage()"
+      [disabled]="isScanDisabled"
+    >
+      Scan
     </button>
-    <button class="btn cancel-button">Cancel</button>
+    <button *ngIf="isTryAgainButtonVisible" class="btn submit-button" (click)="onTryAgain()">
+      Try Again
+    </button>
+    <button class="cancel-button" (click)="onCancel()">Cancel</button>
   </div>
 </div>
