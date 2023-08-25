@@ -1,0 +1,13 @@
+@use 'colors';
+
+.submit-btn {
+  background-color: colors.$purple;
+  color: white;
+  padding: 1.5% 10%;
+  border-radius: 8px;
+}
+
+.cancel-btn {
+  padding: 1.5% 8%;
+  border-radius: 8px;
+}

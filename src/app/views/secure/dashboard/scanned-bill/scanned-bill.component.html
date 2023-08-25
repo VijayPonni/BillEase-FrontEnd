@@ -1,1 +1,62 @@
-<p>scanned-bill works!</p>
+<div class="d-flex flex-column flex-md-row justify-content-md-between gap-5">
+  <canvas class="col col-12 col-md-6" #canvas></canvas>
+  <div class="col col-12 col-md-5 pe-5">
+    <h2 class="fw-bold">Select the box and get the data from here!</h2>
+    <form [formGroup]="billForm" (submit)="submitBillForm()">
+      <div class="form-group mt-3">
+        <label for="invoiceNumber">Invoice Number</label>
+        <div class="input-group flex-nowrap mt-1">
+          <input
+            type="text"
+            class="form-control"
+            id="invoiceNumber"
+            formControlName="invoiceNumber"
+            (focus)="onControlFocus('invoiceNumber')"
+          />
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="gstNumber">GST Number</label>
+        <div class="input-group flex-nowrap mt-1">
+          <input
+            type="text"
+            class="form-control"
+            id="gstNumber"
+            formControlName="gstNumber"
+            (focus)="onControlFocus('gstNumber')"
+          />
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="dateTime">Date and Time</label>
+        <div class="input-group flex-nowrap mt-1">
+          <input
+            type="text"
+            class="form-control"
+            id="dateTime"
+            formControlName="dateTime"
+            (focus)="onControlFocus('dateTime')"
+          />
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="total">Total</label>
+        <div class="input-group flex-nowrap mt-1">
+          <input
+            type="text"
+            class="form-control"
+            id="total"
+            formControlName="total"
+            (focus)="onControlFocus('total')"
+          />
+        </div>
+      </div>
+      <div class="mt-5">
+        <button class="btn submit-btn" type="submit" [disabled]="billForm.invalid">Submit</button>
+        <button class="btn btn-dark cancel-btn ms-4" type="button" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
