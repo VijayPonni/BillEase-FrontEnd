@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { DashboardService } from '../dashboard.service';
+import { HttpEventType } from '@angular/common/http';
+import { ACCEPTED_FILE_TYPES } from 'src/app/shared/constants/constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
-  constructor(
-    private router: Router,
-    private toastrSerive: ToastrService
-  ) {}
+export class DashboardComponent implements OnDestroy {
+  file!: File;
 
-  files: File[] = [];
   fileUploaded: boolean = false;
   isProgress: boolean = true;
   isValidFile: boolean = false;
@@ -22,22 +22,31 @@ export class DashboardComponent {
   isScanButtonVisible: boolean = true;
   isTryAgainButtonVisible: boolean = false;
 
-  imageDataUrl: string = '';
+  progress: number = 0;
 
-  progress: number = 100;
+  subscription: Subscription = new Subscription();
+
+  constructor(
+    private router: Router,
+    private dashboardService: DashboardService,
+    private toastrSerive: ToastrService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   fileBrowseHandler(event: any) {
-    const file = event.target.files[0];
-    this.files.push(file);
+    this.file = event.target.files[0];
     this.fileUploaded = true;
-    setTimeout(() => this.validateFile(this.files[0]), 5000);
+    this.validateFile(this.file);
   }
 
   onFileDropped(files: FileList) {
     if (files.length) {
-      this.files.push(files[0]);
+      this.file = files[0];
       this.fileUploaded = true;
-      setTimeout(() => this.validateFile(this.files[0]), 5000);
+      this.validateFile(this.file);
     } else {
       this.toastrSerive.error('Please try dragging and dropping the file again.');
     }
@@ -47,25 +56,53 @@ export class DashboardComponent {
     const fileSize: number = file.size;
     const fileType: string = file.type;
 
-    if (
-      (file && fileSize <= 2e7 && fileType.includes('png')) ||
-      fileType.includes('jpg') ||
-      fileType.includes('jpeg')
-    ) {
-      this.isValidFile = true;
-      this.isProgress = false;
-      this.isScanDisabled = false;
-    } else {
+    if (file && fileSize >= 3e7) {
       this.isValidFile = false;
       this.isProgress = false;
       this.isScanButtonVisible = false;
       this.isTryAgainButtonVisible = true;
-      this.toastrSerive.error('File size exceeds 20 Mb or Invalid File Type');
+      this.toastrSerive.error('File size exceeds 20 Mb');
+    } else if (file && !ACCEPTED_FILE_TYPES.includes(fileType)) {
+      this.isValidFile = false;
+      this.isProgress = false;
+      this.isScanButtonVisible = false;
+      this.isTryAgainButtonVisible = true;
+      this.toastrSerive.error('Invalid File Type. Please select a PNG, JPG, or JPEG file.');
+    } else {
+      this.uploadFile(file);
     }
   }
 
   onScanImage(): void {
     this.router.navigate(['/scanned_bill']);
+  }
+
+  uploadFile(file: File) {
+    if (file) {
+      const observer = this.dashboardService.uploadFile(file).subscribe({
+        next: (event: any) => {
+          this.subscription.closed = false;
+          if (event.type == HttpEventType.UploadProgress) {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          } else if (event.type == HttpEventType.Response) {
+            this.toastrSerive.success(event.body.message);
+            this.isValidFile = true;
+            this.isProgress = false;
+            this.isScanDisabled = false;
+            this.progress = 0;
+          }
+        },
+        error: (error) => {
+          this.toastrSerive.error(error.message);
+          this.isValidFile = false;
+          this.isProgress = false;
+          this.isScanButtonVisible = false;
+          this.isTryAgainButtonVisible = true;
+          this.progress = 0;
+        },
+      });
+      this.subscription.add(observer);
+    }
   }
 
   onCancel() {
@@ -75,7 +112,10 @@ export class DashboardComponent {
     this.fileUploaded = false;
     this.isProgress = true;
     this.isValidFile = false;
-    this.files = [];
+    this.progress = 0;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onTryAgain(): void {
@@ -84,7 +124,6 @@ export class DashboardComponent {
     this.isScanDisabled = true;
     this.fileUploaded = false;
     this.isProgress = true;
-    this.files = [];
   }
 
   formatBytes(bytes: number) {
