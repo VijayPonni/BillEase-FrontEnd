@@ -113,6 +113,9 @@ export class DashboardComponent implements OnDestroy {
     this.isProgress = true;
     this.isValidFile = false;
     this.progress = 0;
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   onTryAgain(): void {
