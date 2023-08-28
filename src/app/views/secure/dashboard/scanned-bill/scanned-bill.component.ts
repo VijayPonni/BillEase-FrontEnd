@@ -29,6 +29,7 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   gstNumberValues: ValueAndTime[] = [];
   dateTimeValues: ValueAndTime[] = [];
   totalValues: ValueAndTime[] = [];
+  test = true;
 
   scannedCoordinatesList = [
     {
@@ -112,6 +113,10 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
       dateTime: [null, Validators.required],
       total: [null, Validators.required],
     });
+
+    setTimeout(() => {
+      this.test = !this.test;
+    }, 3000);
   }
 
   ngOnInit(): void {
@@ -193,8 +198,10 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.drawBorders();
-    this.canvas.nativeElement.addEventListener('click', this.onCanvasClick.bind(this));
+    if (this.canvas) {
+      this.drawBorders();
+      this.canvas.nativeElement.addEventListener('click', this.onCanvasClick.bind(this));
+    }
   }
 
   @HostListener('window:resize', ['$event'])

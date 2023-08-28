@@ -1,4 +1,7 @@
-<div class="d-flex flex-column flex-md-row justify-content-md-between gap-5">
+<div
+  [style.display]="test ? 'none !important' : 'block'"
+  class="d-flex flex-column flex-md-row justify-content-md-between gap-5"
+>
   <canvas class="col col-12 col-md-6" #canvas></canvas>
   <div class="col col-12 col-md-5 pe-5">
     <h2 class="fw-bold">Select the box and get the data from here!</h2>
@@ -58,5 +61,17 @@
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="loader" *ngIf="test">
+  <div class="spinner-grow" role="status">
+    <span class="sr-only"></span>
+  </div>
+  <div class="spinner-grow ms-4" role="status">
+    <span class="sr-only"></span>
+  </div>
+  <div class="spinner-grow ms-4" role="status">
+    <span class="sr-only"></span>
   </div>
 </div>
