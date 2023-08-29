@@ -29,7 +29,7 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   gstNumberValues: ValueAndTime[] = [];
   dateTimeValues: ValueAndTime[] = [];
   totalValues: ValueAndTime[] = [];
-  test = true;
+  test = false;
 
   scannedCoordinatesList = [
     {
@@ -116,6 +116,7 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
 
     setTimeout(() => {
       this.test = !this.test;
+      this.drawBorders();
     }, 3000);
   }
 
