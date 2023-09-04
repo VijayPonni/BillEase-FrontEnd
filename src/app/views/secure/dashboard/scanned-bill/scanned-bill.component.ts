@@ -7,8 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValueAndTime } from '../dashboard.model';
+import { ScannedImageResponse, ValueAndTime } from '../dashboard.model';
 import { debounceTime } from 'rxjs/operators';
+import { DashboardService } from '../../dashboard.service';
 
 @Component({
   selector: 'app-scanned-bill',
@@ -29,7 +30,9 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   gstNumberValues: ValueAndTime[] = [];
   dateTimeValues: ValueAndTime[] = [];
   totalValues: ValueAndTime[] = [];
-  test = false;
+  isLoading = false;
+  imageUrl!: string;
+  hasError: boolean = false;
 
   scannedCoordinatesList = [
     {
@@ -106,7 +109,10 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
     },
   ];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private dashboardService: DashboardService
+  ) {
     this.billForm = this.formBuilder.group({
       invoiceNumber: [null, Validators.required],
       gstNumber: [null, Validators.required],
@@ -114,10 +120,7 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
       total: [null, Validators.required],
     });
 
-    setTimeout(() => {
-      this.test = !this.test;
-      this.drawBorders();
-    }, 3000);
+    this.getImageData();
   }
 
   ngOnInit(): void {
@@ -205,6 +208,28 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
     }
   }
 
+  getImageData(): void {
+    this.isLoading = true;
+
+    this.dashboardService.getScannedImageDetails().subscribe({
+      next: (response: ScannedImageResponse) => {
+        const mimeType = 'image/jpeg';
+        this.imageUrl = `data:${mimeType};base64,${response.image_data}`;
+        this.isLoading = false;
+        this.drawBorders();
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.hasError = true;
+      },
+    });
+  }
+
+  onTryAgain(): void {
+    this.hasError = false;
+    this.getImageData();
+  }
+
   @HostListener('window:resize', ['$event'])
   onScreenResize(): void {
     this.canvasHeight = this.canvas.nativeElement.offsetHeight;
@@ -220,7 +245,7 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
     const canvas = this.canvas.nativeElement;
     const context = canvas.getContext('2d');
     const image = new Image();
-    image.src = '/assets/images/test.jpg';
+    image.src = this.imageUrl;
     image.onload = () => {
       canvas.width = image.width;
       canvas.height = image.height;
