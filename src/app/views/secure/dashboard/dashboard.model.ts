@@ -4,7 +4,7 @@ export interface ValueAndTime {
 }
 
 export interface ImageCoordinatesAndText {
-  coordinates: number[][];
+  coordinates: string;
   text: string;
 }
 

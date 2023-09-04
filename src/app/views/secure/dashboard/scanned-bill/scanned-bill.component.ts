@@ -7,9 +7,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ScannedImageResponse, ValueAndTime } from '../dashboard.model';
+import { ImageCoordinatesAndText, ScannedImageResponse, ValueAndTime } from '../dashboard.model';
 import { debounceTime } from 'rxjs/operators';
 import { DashboardService } from '../../dashboard.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-scanned-bill',
@@ -21,8 +22,8 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   canvasWidth!: number;
   canvasHeight!: number;
   alteredCoordinatesList: any = [];
-  originalWidth = 600;
-  originalHeight = 758;
+  originalWidth!: number;
+  originalHeight!: number;
   text = '';
   billForm!: FormGroup;
   lastFocussedFormControl = '';
@@ -34,84 +35,12 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
   imageUrl!: string;
   hasError: boolean = false;
 
-  scannedCoordinatesList = [
-    {
-      coordinates: [
-        [35, 37],
-        [161, 37],
-        [161, 53],
-        [35, 53],
-      ],
-      text: 'Your company Name',
-    },
-    {
-      coordinates: [
-        [355, 29],
-        [515, 29],
-        [515, 69],
-        [355, 69],
-      ],
-      text: 'INVOICE',
-    },
-    {
-      coordinates: [
-        [33, 50],
-        [171, 50],
-        [171, 69],
-        [33, 69],
-      ],
-      text: 'Your company slogan',
-    },
-    {
-      coordinates: [
-        [33, 81],
-        [129, 81],
-        [129, 99],
-        [33, 99],
-      ],
-      text: 'Street address',
-    },
-    {
-      coordinates: [
-        [33, 97],
-        [145, 97],
-        [145, 113],
-        [33, 113],
-      ],
-      text: '(City ST ZIP Code)',
-    },
-    {
-      coordinates: [
-        [477, 97],
-        [569, 97],
-        [569, 113],
-        [477, 113],
-      ],
-      text: 'INVOICE #[100]',
-    },
-    {
-      coordinates: [
-        [35, 109],
-        [157, 109],
-        [157, 129],
-        [35, 129],
-      ],
-      text: 'Phone [509.555.0190]',
-    },
-    {
-      coordinates: [
-        [427, 109],
-        [569, 109],
-        [569, 129],
-        [427, 129],
-      ],
-      text: 'DATE: MARCH 30,2015',
-    },
-  ];
+  scannedCoordinatesList!: ImageCoordinatesAndText[];
 
   constructor(
     private formBuilder: FormBuilder,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private toastrService: ToastrService
   ) {
     this.billForm = this.formBuilder.group({
       invoiceNumber: [null, Validators.required],
@@ -119,11 +48,10 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
       dateTime: [null, Validators.required],
       total: [null, Validators.required],
     });
-
-    this.getImageData();
   }
 
   ngOnInit(): void {
+    this.getImageData();
     this.billForm
       .get('invoiceNumber')
       ?.valueChanges.pipe(debounceTime(500))
@@ -213,12 +141,23 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
 
     this.dashboardService.getScannedImageDetails().subscribe({
       next: (response: ScannedImageResponse) => {
+        this.scannedCoordinatesList = response.extracted_text;
         const mimeType = 'image/jpeg';
         this.imageUrl = `data:${mimeType};base64,${response.image_data}`;
+
+        const img = new Image();
+        img.src = this.imageUrl;
+
+        img.onload = () => {
+          this.originalWidth = img.width;
+          this.originalHeight = img.height;
+        };
+
         this.isLoading = false;
         this.drawBorders();
       },
       error: (error) => {
+        this.toastrService.error(error.message);
         this.isLoading = false;
         this.hasError = true;
       },
@@ -255,8 +194,9 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
         context.strokeStyle = 'red';
         context.lineWidth = 1;
         context.beginPath();
-        this.scannedCoordinatesList.forEach((scannedCoordinates: any) => {
-          scannedCoordinates.coordinates.forEach((coordinates: any, index: number) => {
+        this.scannedCoordinatesList.forEach((scannedCoordinates: ImageCoordinatesAndText) => {
+          const parsedCoordinates = JSON.parse(scannedCoordinates.coordinates);
+          parsedCoordinates.forEach((coordinates: any, index: number) => {
             const [xCoordinate, yCoordinate] = coordinates;
             if (index === 0) {
               context.moveTo(xCoordinate, yCoordinate);
@@ -284,9 +224,10 @@ export class ScannedBillComponent implements AfterViewInit, OnInit {
 
   alterCoordinateValues(): void {
     this.alteredCoordinatesList = [];
-    this.scannedCoordinatesList.forEach((scannedCoordinate: any) => {
+    this.scannedCoordinatesList.forEach((scannedCoordinate: ImageCoordinatesAndText) => {
+      const parsedCoordinates = JSON.parse(scannedCoordinate.coordinates);
       const alteredCoordinatesObject: any = { coordinates: [], text: scannedCoordinate.text };
-      scannedCoordinate.coordinates.forEach((coordinate: any) => {
+      parsedCoordinates.forEach((coordinate: any) => {
         const alteredCoordinates = [];
         alteredCoordinates.push(
           +(coordinate[0] * (this.canvasWidth / this.originalWidth)).toFixed(2)
