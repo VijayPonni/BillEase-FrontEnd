@@ -119,6 +119,10 @@
   border: none;
 }
 
+input {
+  clip-path: circle(0);
+}
+
 @include media-breakpoint-down(xl) {
   .dropzone-background {
     .dropzone_before_file_upload {

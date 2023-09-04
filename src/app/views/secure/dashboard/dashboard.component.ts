@@ -29,7 +29,7 @@ export class DashboardComponent implements OnDestroy {
   constructor(
     private router: Router,
     private dashboardService: DashboardService,
-    private toastrSerive: ToastrService
+    private toastrService: ToastrService
   ) {}
 
   ngOnDestroy(): void {
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnDestroy {
       this.fileUploaded = true;
       this.validateFile(this.file);
     } else {
-      this.toastrSerive.error('Please try dragging and dropping the file again.');
+      this.toastrService.error('Please try dragging and dropping the file again.');
     }
   }
 
@@ -61,13 +61,13 @@ export class DashboardComponent implements OnDestroy {
       this.isProgress = false;
       this.isScanButtonVisible = false;
       this.isTryAgainButtonVisible = true;
-      this.toastrSerive.error('File size exceeds 20 Mb');
+      this.toastrService.error('File size exceeds 20 Mb');
     } else if (file && !ACCEPTED_FILE_TYPES.includes(fileType)) {
       this.isValidFile = false;
       this.isProgress = false;
       this.isScanButtonVisible = false;
       this.isTryAgainButtonVisible = true;
-      this.toastrSerive.error('Invalid File Type. Please select a PNG, JPG, or JPEG file.');
+      this.toastrService.error('Invalid File Type. Please select a PNG, JPG, or JPEG file.');
     } else {
       this.uploadFile(file);
     }
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnDestroy {
           if (event.type == HttpEventType.UploadProgress) {
             this.progress = Math.round((100 * event.loaded) / event.total);
           } else if (event.type == HttpEventType.Response) {
-            this.toastrSerive.success(event.body.message);
+            this.toastrService.success(event.body.message);
             this.isValidFile = true;
             this.isProgress = false;
             this.isScanDisabled = false;
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnDestroy {
           }
         },
         error: (error) => {
-          this.toastrSerive.error(error.message);
+          this.toastrService.error(error.message);
           this.isValidFile = false;
           this.isProgress = false;
           this.isScanButtonVisible = false;

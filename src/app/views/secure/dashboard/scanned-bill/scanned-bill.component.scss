@@ -1,0 +1,43 @@
+@use 'colors';
+
+.submit-btn {
+  background-color: colors.$purple;
+  color: white;
+  padding: 1.5% 10%;
+  border-radius: 8px;
+}
+
+.cancel-btn {
+  padding: 1.5% 8%;
+  border-radius: 8px;
+}
+
+.loader {
+  position: absolute;
+  top: 40vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card {
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  top: 35vh;
+  border: none;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transform: translate(-50%);
+  .emoji-container {
+    background-color: colors.$dark-pink;
+    border-radius: 35%;
+    width: 40px;
+    height: 40px;
+  }
+  .error-msg {
+    background-color: colors.$pink;
+    border-radius: 16px;
+  }
+  .error-para {
+    font-size: 0.85rem;
+  }
+}
