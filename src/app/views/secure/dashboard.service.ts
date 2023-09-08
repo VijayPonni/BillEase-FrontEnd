@@ -16,13 +16,13 @@ export class DashboardService {
   uploadFile(file: File): Observable<HttpEvent<SuccessMessage>> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<SuccessMessage>(`${this.apiUrl}/file_upload`, formData, {
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/v1/file_upload`, formData, {
       reportProgress: true,
       observe: 'events',
     });
   }
 
   getScannedImageDetails(): Observable<ScannedImageResponse> {
-    return this.http.get<ScannedImageResponse>(`${this.apiUrl}/extract_text`);
+    return this.http.get<ScannedImageResponse>(`${this.apiUrl}/v1/extract_text`);
   }
 }
