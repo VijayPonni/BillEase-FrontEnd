@@ -25,7 +25,7 @@ export class AuthService {
 
   public logIn(userCredentials: UserCredentials): Observable<HttpResponse<LoginResponse>> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/login`, userCredentials, {
+      .post<LoginResponse>(`${this.apiUrl}/v1/login`, userCredentials, {
         observe: 'response',
       })
       .pipe(
@@ -45,11 +45,11 @@ export class AuthService {
   }
 
   public logOut(): Observable<SuccessMessage> {
-    return this.http.delete<any>(`${this.apiUrl}/logout`);
+    return this.http.delete<any>(`${this.apiUrl}/v1/logout`);
   }
 
   public forgotPassword(params: ForgotPasswordrequestParams): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>(`${this.apiUrl}/send_resend_password_link`, params);
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/v1/send_resend_password_link`, params);
   }
 
   public resetPassword(
@@ -59,12 +59,15 @@ export class AuthService {
     const headers: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<SuccessMessage>(`${this.apiUrl}/reset_password`, params, {
+    return this.http.post<SuccessMessage>(`${this.apiUrl}/v1/reset_password`, params, {
       headers: headers,
     });
   }
 
   public changePassword(changePasswordParams: ChangePasswordParams): Observable<SuccessMessage> {
-    return this.http.post<SuccessMessage>(`${this.apiUrl}/change_password`, changePasswordParams);
+    return this.http.post<SuccessMessage>(
+      `${this.apiUrl}/v1/change_password`,
+      changePasswordParams
+    );
   }
 }
